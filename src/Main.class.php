@@ -1,5 +1,5 @@
 <?php
-class Casba
+class Main
 {
   const MAIN_LANGUAGE = 'fr';
   const GEOSERVER_URBIS_ADM   = "//geoservices-urbis.irisnet.be/geoserver/UrbisAdm/wms";
