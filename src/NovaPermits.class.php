@@ -1,5 +1,5 @@
 <?php
-class Casba extends Main
+class NovaPermits extends Main
 {
   const TIMEOUT = 10; 
 
