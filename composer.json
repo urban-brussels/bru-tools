@@ -1,0 +1,14 @@
+{
+    "name": "urban-brussels/bru-tools",
+    "description": "Outils basés sur les données et webservices disponibles en Région de Bruxelles-Capitale",
+    "require": {
+        "guzzlehttp/guzzle": "^6.3",
+        "phayes/geophp": "^1.2"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "": "src/"
+        }
+    }
+}
