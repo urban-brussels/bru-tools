@@ -22,7 +22,20 @@ print_r($maille);
 echo "</pre>"; 
 
 
-$maille = UrbanLayers::getMaille("EVE-01"); 
+$maille = UrbanLayers::getMailleGeomFromCode("EVE-01"); 
+
+echo "<pre>";
+print_r($maille);
+echo "</pre>"; 
+
+$coord_cq = "POINT(150000 169339)";
+$cq = UrbanLayers::getCqdFromGeom($coord_cq, 31370, true);
+
+echo "<pre>";
+print_r($cq);
+echo "</pre>"; 
+
+$maille = UrbanLayers::getMailleFromGeom($coord_cq);
 
 echo "<pre>";
 print_r($maille);

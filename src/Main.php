@@ -27,4 +27,24 @@ class Main
       'outputFormat' => 'json',
       'sortBy' => 'GMLINK A'
     );
+
+  const BRUGIS_CQDPROG_FIELDS = array(
+      'service' => 'WFS',
+      'version' => '2.0.0',
+      'request' => 'GetFeature',
+      'typeName' => 'BDU_DRU:Contrats_de_quartiers_Programmes',
+      'srsName' => 'EPSG:31370',
+      'outputFormat' => 'json',
+      'sortBy' => 'ID_DRU D'
+    );
+
+  const BRUGIS_CQDPROJ_FIELDS = array(
+      'service' => 'WFS',
+      'version' => '2.0.0',
+      'request' => 'GetFeature',
+      'typeName' => 'BDU_DRU:Contrats_de_quartiers_Projets',
+      'srsName' => 'EPSG:31370',
+      'outputFormat' => 'json',
+      'sortBy' => 'ID_DRU D'
+    );
 }
