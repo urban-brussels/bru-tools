@@ -14,10 +14,10 @@ composer require urban-brussels/bru-tools
 <?php
 // Le point est-il situé dans un "Contrat de Quartier Durable" ?
 $coordinates 	= "POINT(147000 171000)"; // Lat / Lon in WKT format
-$crs 			= 31370; // Coordinate Reference System (31370 for Lambert 72 - 4386 for WGS84)
+$crs 		= 31370; // Coordinate Reference System (31370 for Lambert 72 - 4386 for WGS84)
 $actif 		= false; // If true, retrieves only active CQD
 
-$cqd 			= UrbanLayers::getCqdFromGeom($coordinates, $crs, $actif);
+$cqd 		= UrbanLayers::getCqdFromGeom($coordinates, $crs, $actif);
 
 echo "<pre>";
 print_r($cqd);
