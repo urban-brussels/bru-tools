@@ -25,7 +25,7 @@ echo "</pre>";
 
 // Array
 // (
-//     [0] => stdClass Object
+//     [0] => Array
 //         (
 //             [ID_DRU] => 51
 //             [NOM_FR] => Ecluse - Saint-Lazare
@@ -33,8 +33,8 @@ echo "</pre>";
 //             [DT_DEBUT] => 2008-12-23
 //             [DT_FIN] => 2012-12-22
 //         )
-
-//     [1] => stdClass Object
+//
+//     [1] => Array
 //         (
 //             [ID_DRU] => 11
 //             [NOM_FR] => Duchesse de Brabant
@@ -42,7 +42,6 @@ echo "</pre>";
 //             [DT_DEBUT] => 1999-06-16
 //             [DT_FIN] => 2003-06-15
 //         )
-
 // )
 ```
 
