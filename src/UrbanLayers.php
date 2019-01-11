@@ -107,4 +107,58 @@ class UrbanLayers extends Main
 		return $data ?? "out";
 	} 
 
+	public static function getZonePreemptionFromGeom(string $coord_wkt, int $crs = 31370, bool $actif = true)
+	{
+		$url = self::GEOSERVER_BRUGIS;
+		$fields = self::BRUGIS_PREEMPTION_FIELDS;
+		$fields['cql_filter'] = "INTERSECTS(GEOMETRY, ".$coord_wkt.")";
+		if($actif) { $fields['cql_filter'] .= " AND ACTIF='1'"; };
+
+		$client = new GuzzleHttp\Client();
+
+		try
+		{
+			$response = $client->request('GET', $url . "?" . http_build_query($fields) , ['timeout' => self::TIMEOUT]);
+			$json = json_decode((string)$response->getBody());
+		}
+		catch(Exception $e)
+		{
+			return;
+		}
+
+		foreach($json->features as $key => $value)
+		{
+			$data[] = $value->properties;
+		}
+
+		return $data ?? "out";
+	} 
+
+
+	public static function getCruFromGeom(string $coord_wkt, int $crs = 31370, bool $actif = true)
+	{
+		$url = self::GEOSERVER_BRUGIS;
+		$fields = self::BRUGIS_CRUPROG_FIELDS;
+		$fields['cql_filter'] = "INTERSECTS(GEOMETRY, ".$coord_wkt.")";
+		//if($actif) { $fields['cql_filter'] .= " AND ACTIF='1'"; };
+
+		$client = new GuzzleHttp\Client();
+
+		try
+		{
+			$response = $client->request('GET', $url . "?" . http_build_query($fields) , ['timeout' => self::TIMEOUT]);
+			$json = json_decode((string)$response->getBody());
+		}
+		catch(Exception $e)
+		{
+			return;
+		}
+
+		foreach($json->features as $key => $value)
+		{
+			$data[] = $value->properties;
+		}
+
+		return $data ?? "out";
+	} 	
 }

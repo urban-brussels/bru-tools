@@ -47,4 +47,22 @@ class Main
       'outputFormat' => 'json',
       'sortBy' => 'ID_DRU D'
     );
+
+  const BRUGIS_CRUPROG_FIELDS = array(
+      'service' => 'WFS',
+      'version' => '2.0.0',
+      'request' => 'GetFeature',
+      'typeName' => 'BDU_DRU:Contrats_de_renovation_urbaine_Programmes',
+      'srsName' => 'EPSG:31370',
+      'outputFormat' => 'json'
+    );
+
+  const BRUGIS_PREEMPTION_FIELDS = array(
+      'service' => 'WFS',
+      'version' => '2.0.0',
+      'request' => 'GetFeature',
+      'typeName' => 'BDU_DRU:Zones_de_preemption',
+      'srsName' => 'EPSG:31370',
+      'outputFormat' => 'json',
+    );
 }
