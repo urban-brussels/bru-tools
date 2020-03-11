@@ -1,4 +1,7 @@
 <?php
+use phayes\geophp;
+use Symfony\Component\HttpClient\HttpClient;
+
 class NovaPU extends Main
 {
   public static function getPermitType(string $refnova)
