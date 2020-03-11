@@ -1,5 +1,5 @@
 <?php
-class NovaPermits
+class BlablaPermits
 {
   const GEOSERVER_URBIS_ADM   = "//geoservices-urbis.irisnet.be/geoserver/UrbisAdm/wms";
   const GEOSERVER_URBIS_LOC   = "//geoservices.irisnet.be/localization/Rest/Localize";
