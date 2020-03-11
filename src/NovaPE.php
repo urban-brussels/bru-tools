@@ -1,5 +1,5 @@
 <?php
-class NovaPE
+class NovaPE extends Main
 {
   public static function filterByGeoError(int $year = null)
   {
