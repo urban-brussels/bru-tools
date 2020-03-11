@@ -1,4 +1,7 @@
 <?php
+use phayes\geophp;
+use Symfony\Component\HttpClient\HttpClient;
+
 class NovaPE extends Main
 {
   public static function filterByGeoError(int $year = null)
