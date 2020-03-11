@@ -81,7 +81,7 @@ public static function filterByDecision(int $year = null, int $month = null)
 
 public static function getPermitsData(string $cql_filter = null, int $srs = 31370, string $properties = null, int $count = null, string $sortBy = null)
 {
-  $url = self::GEOSERVER_URBIS;
+  $url = self::GEOSERVER_URBIS_HTTP;
   $fields = array(
     'service' => 'WFS',
     'version' => '2.0.0',
@@ -251,7 +251,7 @@ public static function getPermitsData(string $cql_filter = null, int $srs = 3137
 
 public static function getPermitUtgData(string $iddossier = null, int $srs = 31370)
 {
-  $url = self::GEOSERVER_URBIS;
+  $url = self::GEOSERVER_URBIS_HTTP;
   $fields = array(
     'service' => 'WFS',
     'version' => '2.0.0',
