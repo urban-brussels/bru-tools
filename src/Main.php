@@ -1,7 +1,4 @@
 <?php
-use phayes\geophp;
-use Symfony\Component\HttpClient\HttpClient;
-
 class Main
 {
   const GEOSERVER_URBIS_ADM   = "//geoservices-urbis.irisnet.be/geoserver/UrbisAdm/wms";
