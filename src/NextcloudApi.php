@@ -3,7 +3,7 @@ class NextcloudApi
 {
     public static function createFolder(array $nextcloud_env, string $folder_name = null)
     {
-        $query = 'curl -u '.$nextcloud_env['user'].':'.$nextcloud_env['password'].' -X MKCOL https://'.$nextcloud_env['url'].'/remote.php/dav/files/'.$nextcloud_env['user'].'/__tests__'.$folder_name;
+        $query = 'curl -u '.$nextcloud_env['user'].':'.$nextcloud_env['password'].' -X MKCOL https://'.$nextcloud_env['url'].'/remote.php/dav/files/'.$nextcloud_env['user'].'/share/'.$folder_name;
         $output = shell_exec($query);
         return $query;
     }
