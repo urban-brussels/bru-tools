@@ -32,6 +32,8 @@ class NextcloudApi
 
         $xml = new \SimpleXMLElement($data_curl);
         $data['url'] 		= str_replace("http://", "https://", $xml->data->url);
+        
+        $data['url'] 		= 'curl -u "'.$nextcloud_env['user'].':'.$nextcloud_env['password'].'" -H "OCS-APIRequest: true" -X POST https://'.$nextcloud_env['url'].'/ocs/v1.php/apps/files_sharing/api/v1/shares -d path="/'.$folder_name.'" '.$share_rules;
 
         $data['password'] 	= $share_password ?? null;
         return $data;
