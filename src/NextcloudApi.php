@@ -3,7 +3,7 @@ class NextcloudApi
 {
     public static function createFolder(array $nextcloud_env, string $folder_name = null)
     {
-        $query = 'curl -u '.$nextcloud_env['user'].':'.$nextcloud_env['password'].' -X MKCOL https://'.$nextcloud_env['url'].'/remote.php/dav/files/'.$nextcloud_env['user'].'/share/'.$folder_name;
+        $query = 'curl -u '.$nextcloud_env['user'].':'.$nextcloud_env['password'].' -X MKCOL https://'.$nextcloud_env['url'].'/remote.php/dav/files/'.$nextcloud_env['user'].'/'.$nextcloud_env['root_folder'].'/'.$folder_name;
         $output = shell_exec($query);
         return $query;
     }
@@ -28,12 +28,12 @@ class NextcloudApi
             $share_rules = ' -d shareType=3 -d permissions=1 -d publicUpload=false';
         };
 
-        $data_curl = shell_exec('curl -u "'.$nextcloud_env['user'].':'.$nextcloud_env['password'].'" -H "OCS-APIRequest: true" -X POST https://'.$nextcloud_env['url'].'/ocs/v1.php/apps/files_sharing/api/v1/shares -d path="/'.$folder_name.'" '.$share_rules);
+        $data_curl = shell_exec('curl -u "'.$nextcloud_env['user'].':'.$nextcloud_env['password'].'" -H "OCS-APIRequest: true" -X POST https://'.$nextcloud_env['url'].'/ocs/v1.php/apps/files_sharing/api/v1/shares -d path="/'.$nextcloud_env['root_folder'].'/'.$folder_name.'" '.$share_rules);
 
         $xml = new \SimpleXMLElement($data_curl);
         $data['url'] 		= str_replace("http://", "https://", $xml->data->url);
         
-        $data['curl'] 		= 'curl -u "'.$nextcloud_env['user'].':'.$nextcloud_env['password'].'" -H "OCS-APIRequest: true" -X POST https://'.$nextcloud_env['url'].'/ocs/v1.php/apps/files_sharing/api/v1/shares -d path="/'.$folder_name.'" '.$share_rules;
+        $data['curl'] 		= 'curl -u "'.$nextcloud_env['user'].':'.$nextcloud_env['password'].'" -H "OCS-APIRequest: true" -X POST https://'.$nextcloud_env['url'].'/ocs/v1.php/apps/files_sharing/api/v1/shares -d path="/'.$nextcloud_env['root_folder'].'/'.$folder_name.'" '.$share_rules;
 
         $data['password'] 	= $share_password ?? null;
         return $data;
