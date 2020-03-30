@@ -60,6 +60,11 @@ class NovaPU extends Main
     $refnova = strtoupper($refnova);
     return "refnova='".$refnova."'";
   }
+  
+  public static function filterByRefnovas(array $refnovas)
+  {
+    return "refnova IN ('".implode("','", $refnovas)."')";
+  }
 
   public static function filterByMunicipality(int $zipcode)
   {
