@@ -5,7 +5,7 @@ class NovaApi
 {
     public static function getApiToken(array $nova_api_env)
     {
-        $output = shell_exec('curl -k -d "grant_type=client_credentials" -H "Authorization: Basic '.base64_encode($nova_api_env['consumer_key'].":".$nova_api_env['consumer_secret']).'" '.$nova_api_env['endpoint'].'api/token');
+        $output = shell_exec('curl -k -d "grant_type=client_credentials&scope='.$nova_api_env['scope'].'" -H "Authorization: Basic '.base64_encode($nova_api_env['consumer_key'].":".$nova_api_env['consumer_secret']).'" '.$nova_api_env['endpoint'].'api/token');
         $exp = explode('"', $output);
         return $exp[3];
     }
