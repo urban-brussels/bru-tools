@@ -176,7 +176,7 @@ class NovaPU extends Main
       'typeName' => 'Nova:vmnovaurbanview',
       'srsName' => 'EPSG:'.$srs,
       'outputFormat' => 'json',
-      'cql_filter' => ($cql_filter ?? "datedepot<='".date("Y-m-d")."T23:59:59Z'")." AND realobjectfr NOT LIKE 'test %'",
+      'cql_filter' => ($cql_filter ?? "datedepot<='".date("Y-m-d")."T23:59:59Z'")." AND realobjectfr NOT LIKE 'test %' AND refnova NOT LIKE '%AC/%'",
       'propertyname' => $properties,
       'sortBy' => ($sortBy ?? "datedepot D"),
       'count' => ($count ?? 2000),
