@@ -6,7 +6,7 @@ class NovaPU extends Main
 {
   public static function getPermitType(string $refnova)
   {
-    if( strstr($refnova, 'IPE') || strstr($refnova, 'CL') || strstr($refnova, 'ICE') || strstr($refnova, 'RC_MOD') || strstr($refnova, 'PLP') ) {
+    if( strstr($refnova, 'IPE') || strstr($refnova, 'CL') || strstr($refnova, 'ICE') || strstr($refnova, 'RC_MOD') || strstr($refnova, 'PLP') || strstr($refnova, 'IRPE') ) {
       return "PE"; 
     }
     else {
