@@ -14,7 +14,7 @@ class NovaApi
     {
         $httpClient = HttpClient::create();
         $response = $httpClient->request('POST', $nova_api_env['endpoint'].'api/nova-api/document/1.0.0/list/', [
-            'auth_bearer' => self::getApiToken(),
+            'auth_bearer' => self::getApiToken($nova_api_env),
             'headers' => [
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
@@ -41,7 +41,7 @@ class NovaApi
     {
         $httpClient = HttpClient::create();
         $response = $httpClient->request('GET', $nova_api_env['endpoint'].'api/nova-api/document/1.0.0/download/identifier/UUID/'.$identifier, [
-            'auth_bearer' => self::getApiToken(),
+            'auth_bearer' => self::getApiToken($nova_api_env),
             'headers' => [
                 'Content-Type' => 'application/octet-stream',
             ]
