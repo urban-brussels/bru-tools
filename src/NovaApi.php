@@ -11,7 +11,7 @@ class NovaApi
         return $exp[3];
     }
 
-    public static function getApiDocsList(array $nova_api_env, ?array $id_list, string $type = "ID", bool $with_key = false)
+    public static function getApiDocsList(array $nova_api_env, ?array $id_list, string $type = "ID", ?string $jwt_key = null)
     {
         $content = [
             'auth_bearer' => self::getApiToken($nova_api_env),
@@ -23,9 +23,8 @@ class NovaApi
             'body' => self::getReferencesJson($id_list, $type),
         ];
 
-        if ($with_key) {
-            $content['headers']['ADVICE_EXTERNAL'] = $nova_api_env['ADVICE_EXTERNAL'];
-            $content['headers']['x-jwt-api-key'] = $nova_api_env['jwt'];
+        if (null != $jwt_key) {
+            $content['headers']['x-jwt-api-key'] = $jwt_key;
         }
         $httpClient = HttpClient::create();
         $response = $httpClient->request('POST', $nova_api_env['endpoint'] . 'api/nova-api/document/1.0.0/list/', $content);
@@ -43,7 +42,7 @@ class NovaApi
         return $content['publications'] ?? null;
     }
 
-    public static function getApiDocDownload(array $nova_api_env, string $identifier, bool $with_key = false)
+    public static function getApiDocDownload(array $nova_api_env, string $identifier, ?string $jwt_key = null)
     {
         $content = [
             'auth_bearer' => self::getApiToken($nova_api_env),
@@ -52,8 +51,8 @@ class NovaApi
             ]
         ];
 
-        if ($with_key) {
-            $content['headers']['x-jwt-api-key'] = $nova_api_env['jwt'];
+        if (null != $jwt_key) {
+            $content['headers']['x-jwt-api-key'] = $jwt_key;
         }
 
         $httpClient = HttpClient::create();
@@ -64,8 +63,8 @@ class NovaApi
 
         return $content ?? null;
     }
-    
-    
+
+
     public static function getChargesUrbanisme(array $nova_api_env, string $uuid, string $type = "UUID")
     {
         $httpClient = HttpClient::create();
