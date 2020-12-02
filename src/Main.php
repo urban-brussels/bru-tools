@@ -5,7 +5,7 @@ class Main
   const GEOSERVER_URBIS_LOC   = "//geoservices.irisnet.be/localization/Rest/Localize";
   const GEOSERVER_URBIS     = "//geoservices-others.irisnet.be/geoserver/ows";
   const GEOSERVER_URBIS_HTTP  = "http://geoservices-others.irisnet.be/geoserver/ows";
-  const GEOSERVER_BRUGIS      = "//www.mybrugis.irisnet.be/geoserver/wms";
+  const GEOSERVER_BRUGIS      = "https://gis.urban.brussels/geoserver/wms";
   const GEOSERVER_BRU_MOBIL   = "//data-mobility.brussels/geoserver/bm_public_transport/wms";
   const TIMEOUT = 10; 
 
