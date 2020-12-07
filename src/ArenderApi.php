@@ -1,6 +1,6 @@
 <?php
 
-class Arender
+class ArenderApi
 {
     public static function removeSpecialCharacters(string $string): string
     {
