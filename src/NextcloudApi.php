@@ -1,4 +1,7 @@
 <?php
+use Symfony\Component\DomCrawler\Crawler;
+use Symfony\Component\HttpClient\HttpClient;
+
 class NextcloudApi
 {
     public static function createFolder(array $nextcloud_env, string $folder_name = null)
@@ -6,6 +9,46 @@ class NextcloudApi
         $query = 'curl -u '.$nextcloud_env['user'].':'.$nextcloud_env['password'].' -X MKCOL https://'.$nextcloud_env['url'].'/remote.php/dav/files/'.$nextcloud_env['user'].'/'.$nextcloud_env['root_folder'].'/'.$folder_name;
         $output = shell_exec($query);
         return $query;
+    }
+
+    public static function listFilesFromFolder(array $nextcloud_env, string $folder_name)
+    {
+        $query = 'curl -u '.$nextcloud_env['user'].':'.$nextcloud_env['password'].' -X PROPFIND https://'.$nextcloud_env['url'].'/remote.php/dav/files/'.$nextcloud_env['user'].'/'.$nextcloud_env['root_folder'].'/'.$folder_name;
+        $output = shell_exec($query);
+
+        $crawler = new Crawler($output);
+        $doc['href'] = $crawler->filterXPath('//d:multistatus/d:response/d:href');
+//        $doc['length'] = $crawler->filterXPath('//d:multistatus/d:response/d:propstat/d:prop/d:getcontentlength');
+        $data = [];
+        $n = 0;
+        foreach ($doc['href'] as $href) {
+            if($n>0) {
+                $data[$n]['href'] = $href->nodeValue;
+                $exp_href = explode('/', $data[$n]['href']);
+                $data[$n]['name']['label'] = urldecode($exp_href[count($exp_href)-1]);
+                $data[$n]['identifier']['key'] = sha1($data[$n]['href']);
+            }
+            $n++;
+        }
+        return $data;
+    }
+
+    public static function getApiDocDownload(array $nextcloud_env, string $file_path)
+    {
+        $content = [
+            'headers' => [
+                'Content-Type' => 'application/octet-stream',
+            ],
+            'auth_basic' => [$nextcloud_env['user'], $nextcloud_env['password']],
+        ];
+
+        $httpClient = HttpClient::create();
+        $response = $httpClient->request('GET', 'https://'.$nextcloud_env['url'].$file_path, $content);
+
+        $statusCode = $response->getStatusCode();
+        $content = $response->getContent();
+
+        return $content ?? null;
     }
 
     public static function shareFolder(array $nextcloud_env, string $folder_name = null, bool $password = true, $expireDate = null)
