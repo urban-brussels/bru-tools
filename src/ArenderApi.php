@@ -17,6 +17,8 @@ class ArenderApi
         $document_title = preg_replace('/^\d+_/', '', $document_title);
         $document_title = substr($document_title, 0, strrpos($document_title, "."));
         $document_title = str_replace('_', ' ', $document_title);
+        $document_title = str_replace("'", "´", $document_title);
+        
         return $document_title;
     }
 
