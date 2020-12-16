@@ -43,7 +43,7 @@ class NextcloudApi
         ];
 
         $httpClient = HttpClient::create();
-        $response = $httpClient->request('GET', 'https://'.$nextcloud_env['url'].$file_path, $content);
+        $response = $httpClient->request('GET', 'https://'.strtok($nextcloud_env['url'],'/').$file_path, $content);
 
         $statusCode = $response->getStatusCode();
         $content = $response->getContent();
