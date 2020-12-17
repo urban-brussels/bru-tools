@@ -24,6 +24,7 @@ class NextcloudApi
         foreach ($doc['href'] as $href) {
             if($n>0) {
                 $data[$n]['href'] = $href->nodeValue;
+                $data[$n]['src'] = 'nextcloudapi';
                 $exp_href = explode('/', $data[$n]['href']);
                 $data[$n]['name']['label'] = urldecode($exp_href[count($exp_href)-1]);
                 $data[$n]['identifier']['key'] = sha1($data[$n]['href']);
