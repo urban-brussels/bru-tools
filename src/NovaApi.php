@@ -39,7 +39,15 @@ class NovaApi
             var_dump($e->getMessage());
         }
 
-        return $content['publications'] ?? null;
+        if(!isset($content['publications'])) {
+            return [];
+        }
+
+        // add origin to each doc
+        foreach($content['publications'] as $key => &$val){
+           $val['src'] = 'novaapi';
+        }
+        return $content['publications'] ?? [];
     }
 
     public static function getApiDocDownload(array $nova_api_env, string $identifier, ?string $jwt_key = null)
