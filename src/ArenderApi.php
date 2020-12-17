@@ -24,8 +24,9 @@ class ArenderApi
 
     public static function checkArenderKnowsDocument(string $identifier): bool
     {
-        $http_code = shell_exec("curl -I " . $_ENV['ARENDER_BASE_PATH'] . "/rendergwt/uploadServlet?uuid=" . $identifier . " | grep \"^HTTP\/\"");
-        return $http_code === 200;
+        $http_code = shell_exec("curl -I " . $_ENV['ARENDER_BASE_PATH'] . "/arendergwt/uploadServlet?uuid=" . $identifier . " | grep \"^HTTP\/\"");
+        if(stristr($http_code, '200')) { return true; }
+        return false;
     }
 
     public static function defineCategories(string $locale): array
