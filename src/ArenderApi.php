@@ -1,4 +1,5 @@
 <?php
+use Symfony\Component\HttpClient\HttpClient;
 
 class ArenderApi
 {
@@ -22,13 +23,23 @@ class ArenderApi
         return $document_title;
     }
 
-    public static function checkArenderKnowsDocument(string $identifier): bool
+    public static function checkArenderKnowsDocument(string $identifier): ?string
     {
-        $http_code = shell_exec("curl -I " . $_ENV['ARENDER_BASE_PATH'] . "/arendergwt/uploadServlet?uuid=" . $identifier . " | grep \"^HTTP\/\"");
-        if(stristr($http_code, '200')) { return true; }
-        return false;
-    }
+        $httpClient = HttpClient::create();
+        $response = $httpClient->request('GET', $_ENV['ARENDER_BASE_PATH'] . "/arendergwt/uploadServlet?uuid=" . $identifier);
 
+        try {
+            $statusCode = $response->getStatusCode();
+            $content = $response->getContent(false);
+            if ($statusCode !== 200) {
+                return null;
+            };
+        } catch (TransportExceptionInterface $e) {
+            var_dump($e->getMessage());
+        }
+       return substr($content, 1, -1); 
+    }
+    
     public static function defineCategories(string $locale): array
     {
         $json['title'] = '';
