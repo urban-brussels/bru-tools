@@ -34,8 +34,12 @@ class NextcloudApi
         return $data;
     }
 
-    public static function getApiDocDownload(array $nextcloud_env, string $file_path)
+    public static function getApiDocDownload(array $nextcloud_env, ?string $file_path)
     {
+        if(is_null($file_path)) {
+            return null;
+        }
+        
         $content = [
             'headers' => [
                 'Content-Type' => 'application/octet-stream',
