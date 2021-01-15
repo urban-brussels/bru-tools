@@ -10,24 +10,34 @@ class NextcloudApi
         $output = shell_exec($query);
         return $query;
     }
-
+    
     public static function listFilesFromFolder(array $nextcloud_env, string $folder_name)
     {
-        $query = 'curl -u '.$nextcloud_env['user'].':'.$nextcloud_env['password'].' -X PROPFIND https://'.$nextcloud_env['url'].'/remote.php/dav/files/'.$nextcloud_env['user'].'/'.$nextcloud_env['root_folder'].'/'.$folder_name;
+        if(!strstr($folder_name, '/remote.php/dav/')) {
+            $url = '/remote.php/dav/files/'.$nextcloud_env['user'].'/'.$nextcloud_env['root_folder'].'/'.$folder_name.'/';
+        }
+        else {
+            $url = $folder_name;
+        }
+
+        $query = 'curl -u '.$nextcloud_env['user'].':'.$nextcloud_env['password'].' -X PROPFIND https://'.$nextcloud_env['url'].$url;
         $output = shell_exec($query);
 
         $crawler = new Crawler($output);
         $doc['href'] = $crawler->filterXPath('//d:multistatus/d:response/d:href');
-//        $doc['length'] = $crawler->filterXPath('//d:multistatus/d:response/d:propstat/d:prop/d:getcontentlength');
-        $data = [];
+
         $n = 0;
         foreach ($doc['href'] as $href) {
-            if($n>0) {
+            if(substr($href->nodeValue, -1) !== '/'){
                 $data[$n]['href'] = $href->nodeValue;
                 $data[$n]['src'] = 'nextcloudapi';
                 $exp_href = explode('/', $data[$n]['href']);
                 $data[$n]['name']['label'] = urldecode($exp_href[count($exp_href)-1]);
                 $data[$n]['identifier']['key'] = sha1($data[$n]['href']);
+            }
+            elseif($href->nodeValue !== $url) {
+                $new_data = self::listFilesFromFolder($nextcloud_env, $href->nodeValue);
+                $data = array_merge($data, $new_data);
             }
             $n++;
         }
