@@ -17,11 +17,13 @@ class NextcloudApi
             $url = '/remote.php/dav/files/'.$nextcloud_env['user'].'/'.$nextcloud_env['root_folder'].'/'.$folder_name.'/';
         }
         else {
-            $url = $folder_name;
+            $url = substr($folder_name, strpos($folder_name, '/remote.php/'));
         }
 
         $query = 'curl -u '.$nextcloud_env['user'].':'.$nextcloud_env['password'].' -X PROPFIND https://'.$nextcloud_env['url'].$url;
         $output = shell_exec($query);
+
+        $data = [];
 
         $crawler = new Crawler($output);
         $doc['href'] = $crawler->filterXPath('//d:multistatus/d:response/d:href');
@@ -35,7 +37,7 @@ class NextcloudApi
                 $data[$n]['name']['label'] = urldecode($exp_href[count($exp_href)-1]);
                 $data[$n]['identifier']['key'] = sha1($data[$n]['href']);
             }
-            elseif($href->nodeValue !== $url) {
+            elseif($href->nodeValue !== $url && $href->nodeValue !== $folder_name) {
                 $new_data = self::listFilesFromFolder($nextcloud_env, $href->nodeValue);
                 $data = array_merge($data, $new_data);
             }
