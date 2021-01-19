@@ -37,7 +37,7 @@ class NextcloudApi
                 $data[$n]['name']['label'] = urldecode($exp_href[count($exp_href)-1]);
                 $data[$n]['identifier']['key'] = sha1($data[$n]['href']);
             }
-            elseif($href->nodeValue !== $url && $href->nodeValue !== $folder_name) {
+            elseif($href->nodeValue !== $url && $href->nodeValue !== $folder_name && $href->nodeValue !== '/y'.$url) {
                 $new_data = self::listFilesFromFolder($nextcloud_env, $href->nodeValue);
                 $data = array_merge($data, $new_data);
             }
