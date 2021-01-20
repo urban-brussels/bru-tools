@@ -1,4 +1,8 @@
 <?php
+use ici\ici_tools\WfsLayer;
+use Symfony\Component\HttpClient\HttplugClient;
+
+
 class UrbanLayers extends Main
 {
 	public static function getMailleList()
@@ -160,5 +164,29 @@ class UrbanLayers extends Main
 		}
 
 		return $data ?? "out";
-	} 	
+	}
+
+	public static function getEspStructurantsFromGeom(string $coord_wkt, int $crs = 31370)
+    {
+        $wfs = new WfsLayer('https://gis.urban.brussels/geoserver/ows', 'PER:PRDD_A10_C9_AXES_STRUCTURANTS');
+        $json = $wfs->setCqlFilter("INTERSECTS(GEOM, " . $coord_wkt . ")")->setOutputSrs($crs)->getResults();
+        
+        return $json;
+    }
+
+    public static function getZicheeFromGeom(string $coord_wkt, int $crs = 31370, int $buffer = 0): bool
+    {
+        $wfs = new WfsLayer('https://gis.urban.brussels/geoserver/ows', 'BDU:Zichee');
+        $json = $wfs->setCqlFilter("INTERSECTS(GEOMETRY, BUFFER(" . $coord_wkt . ",".$buffer."))")->setOutputSrs($crs)->getResults();
+
+        return count($json->features) > 0 ? true : false;
+    }
+
+    public static function getEdrlrFromGeom(string $coord_wkt, int $crs = 31370): bool
+    {
+        $wfs = new WfsLayer('https://gis.urban.brussels/geoserver/ows', 'BDU:EDRLR');
+        $json = $wfs->setCqlFilter("INTERSECTS(GEOMETRY, " . $coord_wkt . ")")->setOutputSrs($crs)->getResults();
+
+        return count($json->features) > 0 ? true : false;
+    }
 }
