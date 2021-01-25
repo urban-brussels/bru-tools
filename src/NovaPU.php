@@ -270,6 +270,11 @@ class NovaPU extends Main
                 $property['casba_existing'] = $property['officeexisting'] ?? null + ($property['intgoodsexisting'] ?? null);
                 $property['casba_projected'] = $property['officeprojected'] ?? null + ($property['intgoodsprojected'] ?? null);
             };
+           
+            // Suspensions
+            if (isset($property['suspensions']) && !is_null($property['suspensions'])) {
+                $property['suspensions'] = json_decode($property['suspensions']);
+            };
 
             $property['pu_pe'] = "PU";
             if (isset($property['casesubtype']) && in_array($property['casesubtype'], ["PFD", "PFU", "SFD", "ECO", "CPFD", "GOU_PU", "LPFD", "LPFU", "CPFU", "LCFU", "LSFD"])) {
