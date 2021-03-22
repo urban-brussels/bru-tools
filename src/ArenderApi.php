@@ -37,7 +37,25 @@ class ArenderApi
         } catch (TransportExceptionInterface $e) {
             var_dump($e->getMessage());
         }
-       return substr($content, 1, -1); 
+
+        $uuid = substr($content, 1, -1);
+
+        $response = $httpClient->request('GET', "http://10.128.82.38:8761/document/?documentId=" . $uuid);
+
+        try {
+            $statusCode = $response->getStatusCode();
+            $content = $response->getContent(false);
+            if ($content !== "true") {
+//                dd("http://10.128.82.38:8761/document/?documentId=" . $uuid, $content);
+
+                return null;
+            };
+        } catch (TransportExceptionInterface $e) {
+            var_dump($e->getMessage());
+        }
+
+        return $uuid;
+
     }
     
     public static function defineCategories(string $locale): array
