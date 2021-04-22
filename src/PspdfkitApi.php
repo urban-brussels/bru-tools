@@ -7,7 +7,7 @@ class PspdfkitApi
 
     public static function uploadDocument(string $uuid, string $path)
     {
-        $curl = "curl -X POST \"http://pvdcl-arndr01:5000/api/documents\" -H  \"accept: application/json\" -H  \"Authorization: Token token=secret\" -H  \"Content-Type: multipart/form-data\" -F \"document_id=".$uuid."\" -F \"keep_current_annotations=\" -F \"overwrite_existing_document=false\" -F \"title=\" -F \"url=\" -F \"file=@".$path.".$uuid."\"";
+        $curl = "curl -X POST \"http://pvdcl-arndr01:5000/api/documents\" -H  \"accept: application/json\" -H  \"Authorization: Token token=secret\" -H  \"Content-Type: multipart/form-data\" -F \"document_id=".$uuid."\" -F \"keep_current_annotations=\" -F \"overwrite_existing_document=false\" -F \"title=\" -F \"url=\" -F \"file=@".$path."".$uuid."\"";
         exec($curl);
     }
 
