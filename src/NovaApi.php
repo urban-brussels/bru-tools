@@ -23,18 +23,22 @@ class NovaApi
             'body' => self::getReferencesJson($id_list, $type),
         ];
 
+        $jwt_key = '89dd54e2-9e13-4e3f-b73a-2e402be0a5b8';
+
         if (null != $jwt_key) {
             $content['headers']['x-jwt-api-key'] = $jwt_key;
         }
         $httpClient = HttpClient::create();
-        $response = $httpClient->request('POST', $nova_api_env['endpoint'] . 'api/nova-api/document/1.0.0/list/', $content);
+        $response = $httpClient->request('POST', $nova_api_env['endpoint'] . 'api/nova-api/document/test/1.0.0/list/', $content);
 
         try {
             $statusCode = $response->getStatusCode();
             $content = $response->getContent(false);
-            if ($statusCode == 200 && $content) {
+
+            if ($statusCode == 200 && !is_null($content) && $content !== "null") { // New API: check is_null
                 $content = $response->toArray();
             };
+
         } catch (TransportExceptionInterface $e) {
             var_dump($e->getMessage());
         }
@@ -47,6 +51,8 @@ class NovaApi
         foreach($content['publications'] as $key => &$val){
            $val['src'] = 'novaapi';
         }
+
+
         return $content['publications'] ?? [];
     }
 
@@ -64,7 +70,7 @@ class NovaApi
         }
 
         $httpClient = HttpClient::create();
-        $response = $httpClient->request('GET', $nova_api_env['endpoint'] . 'api/nova-api/document/1.0.0/download/identifier/UUID/' . $identifier, $content);
+        $response = $httpClient->request('GET', $nova_api_env['endpoint'] . 'api/nova-api/document/test/1.0.0/download/identifier/UUID/' . $identifier, $content);
 
         $statusCode = $response->getStatusCode();
         $content = $response->getContent();
@@ -76,7 +82,7 @@ class NovaApi
     public static function getChargesUrbanisme(array $nova_api_env, string $uuid, string $type = "UUID")
     {
         $httpClient = HttpClient::create();
-        $response = $httpClient->request('POST', $nova_api_env['endpoint'].'api/nova-api/graph/1.0.0/graphql', [
+        $response = $httpClient->request('POST', $nova_api_env['endpoint'].'api/nova-api/graph/test/1.0.0/graphql', [
             'auth_bearer' => self::getApiToken($nova_api_env),
             'headers' => [
                 'Content-Type' => 'application/json',
@@ -97,7 +103,7 @@ class NovaApi
         try {
             $statusCode = $response->getStatusCode();
             $content = $response->getContent(false);
-            if($statusCode == 200 && $content) {
+            if($statusCode == 200 && is_array($content)) {
                 $content = $response->toArray();
             };
         } catch (TransportExceptionInterface $e) {
