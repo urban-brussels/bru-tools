@@ -23,8 +23,6 @@ class NovaApi
             'body' => self::getReferencesJson($id_list, $type),
         ];
 
-        $jwt_key = '89dd54e2-9e13-4e3f-b73a-2e402be0a5b8';
-
         if (null != $jwt_key) {
             $content['headers']['x-jwt-api-key'] = $jwt_key;
         }
