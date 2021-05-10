@@ -26,7 +26,7 @@ class ArenderApi
     public static function checkArenderKnowsDocument(string $identifier): ?string
     {
         $httpClient = HttpClient::create();
-        $response = $httpClient->request('GET', $_ENV['ARENDER_BASE_PATH'] . "/arendergwt/uploadServlet?uuid=" . $identifier);
+        $response = $httpClient->request('GET', $_ENV['ARENDER_BASE_PATH'] . "/arendergwt/uploadServlet?uuid=" . $identifier, ['timeout' => 3000]);
 
         try {
             $statusCode = $response->getStatusCode();
