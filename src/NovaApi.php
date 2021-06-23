@@ -101,7 +101,7 @@ class NovaApi
         try {
             $statusCode = $response->getStatusCode();
             $content = $response->getContent(false);
-            if($statusCode == 200 && is_array($content)) {
+            if($statusCode == 200 /*&& is_array($content)*/) {
                 $content = $response->toArray();
             };
         } catch (TransportExceptionInterface $e) {
