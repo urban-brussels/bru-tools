@@ -277,7 +277,7 @@ class NovaPU extends Main
             };
 
             $property['pu_pe'] = "PU";
-            if (isset($property['casesubtype']) && in_array($property['casesubtype'], ["PFD", "PFU", "SFD", "ECO", "CPFD", "GOU_PU", "LPFD", "LPFU", "CPFU", "LCFU", "LSFD"])) {
+            if (isset($property['casesubtype']) && in_array($property['casesubtype'], ["PFD", "PFU", "SFD", "ECO", "SOC", "CPFD", "GOU_PU", "LPFD", "LPFU", "CPFU", "LCFU", "LSFD"])) {
                 $property['managingauthority'] = "REGION";
             } elseif (isset($property['casesubtype'])) {
                 $property['managingauthority'] = "COMMUNE";
